@@ -1,14 +1,25 @@
-# Project
+# IP2Azure
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This command-line tool allows you to quickly check if a given IPv4 address is used by an Azure service.
 
-As the maintainer of this project, please make a few updates:
+It does so by loading the public list of Azure IPs (which is published at https://www.microsoft.com/en-us/download/details.aspx?id=56519)
+and getting all the services whose published subnets contain the given IP.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+A copy of this file is stored in this repository, under the `data` directory.
+
+For example, from the `src` directory:
+
+```
+❯  dotnet run --azureJson ../data/ServiceTags_Public_20220627.json --address 20.51.10.137 -q
+20.51.10.137 AzureResourceManager, AzureResourceManager.WestUS2, AzureCloud.westus2, AzureCloud
+```
+
+If the tool finds no matching services, it will only echo bach the given IP. Example:
+
+```
+❯  dotnet run --azureJson ../data/ServiceTags_Public_20220627.json --address 127.0.0.1 -q
+127.0.0.1
+```
 
 ## Contributing
 

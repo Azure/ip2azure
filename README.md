@@ -14,7 +14,7 @@ For example, from the `src` directory:
 20.51.10.137 AzureResourceManager, AzureResourceManager.WestUS2, AzureCloud.westus2, AzureCloud
 ```
 
-If the tool finds no matching services, it will only echo bach the given IP. Example:
+If the tool finds no matching services, it will only echo back the given IP. Example:
 
 ```
 ❯  dotnet run --azureJson ../data/ServiceTags_Public_20220627.json --address 127.0.0.1 -q

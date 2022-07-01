@@ -12,7 +12,7 @@ Parser.Default.ParseArguments<Options>(args)
             }
             catch (FormatException)
             {
-                Console.WriteLine($"{opts.Address} is not a valid IPV4 address.");
+                Console.Error.WriteLine($"{opts.Address} is not a valid IPV4 address.");
                 Environment.Exit(1);
             }
             string json = System.IO.File.ReadAllText(opts.AzureJson);
@@ -21,7 +21,7 @@ Parser.Default.ParseArguments<Options>(args)
             var servicesMap = JsonConvert.DeserializeObject<ServiceRanges>(json)?.GetServicesByRange();
 
             if (servicesMap is null) {
-                Console.WriteLine($"Could not parse the JSON file {opts.AzureJson}.");
+                Console.Error.WriteLine($"Could not parse the JSON file {opts.AzureJson}.");
                 Environment.Exit(1);
             }
 
@@ -29,7 +29,7 @@ Parser.Default.ParseArguments<Options>(args)
             var nonIpv4Count = servicesMap.Keys.Where(s => !IPRange.IsIpV4Range(s)).Count();
             if (nonIpv4Count > 0 && !opts.Quiet)
             {
-                Console.WriteLine($"WARNING: the JSON file contains {nonIpv4Count} non-IPv4 ranges, but this tool only supports IPv4.");
+                Console.Error.WriteLine($"WARNING: the JSON file contains {nonIpv4Count} non-IPv4 ranges, but this tool only supports IPv4.");
             }
 
             var ranges = servicesMap.Keys.Where(s => IPRange.IsIpV4Range(s)).Select(s => new IPRange(s));

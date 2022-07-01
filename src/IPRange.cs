@@ -11,13 +11,15 @@ namespace IP2Azure
             var tokens = range.Split("/");
 
             Subnet = IPAddress.Parse(tokens[0]);
-            Mask = GetSubnetMask(Int32.Parse(tokens[1]));
+            MaskSize = Int32.Parse(tokens[1]);
+            Mask = GetSubnetMask(MaskSize);
             Range = range;
         }
 
         public IPAddress Subnet { get; }
         public IPAddress Mask { get; }
         public string Range { get; }
+        public int MaskSize { get; }
 
         public bool Contains(IPAddress addr)
         {

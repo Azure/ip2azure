@@ -33,15 +33,22 @@ Parser.Default.ParseArguments<Options>(args)
             }
 
             var ranges = servicesMap.Keys.Where(s => IPRange.IsIpV4Range(s)).Select(s => new IPRange(s));
-            var services = new List<String>();
+            var services = new List<(string service, int maskSize)>();
             foreach (var range in ranges)
             {
                 if (range.Contains(ip))
                 {
-                    services.AddRange(servicesMap[range.Range]);
+                    foreach (var serviceName in servicesMap[range.Range]) {
+                        services.Add((serviceName, range.MaskSize));
+                    }
                 }
             }
-            var svcList = String.Join(", ", services);
+            // Order first by longest subnet mask size and then by longest service name.
+            // This will make more specific services (like AzureResourceManager) appear before less specific
+            // services (e.g., AzureCloud), and region-specific services (like AzureResourceManager.WestUS2)
+            // appear before non-regional versions.
+            var orderedServices = services.OrderByDescending(s => s.maskSize).ThenByDescending(s => s.service.Length).Select(s => s.service);
+            var svcList = String.Join(", ", orderedServices);
             Console.WriteLine($"{ip} {svcList}");
         }
     );

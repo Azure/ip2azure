@@ -10,14 +10,14 @@ A copy of this file is stored in this repository, under the `data` directory.
 For example, from the `src` directory:
 
 ```
-❯  dotnet run --azureJson ../data/ServiceTags_Public_20220627.json --address 20.51.10.137 -q
+❯  dotnet run --azureJson ../data/ServiceTags_Public_20240408.json --address 20.51.10.137 -q
 20.51.10.137 AzureResourceManager, AzureResourceManager.WestUS2, AzureCloud.westus2, AzureCloud
 ```
 
 If the tool finds no matching services, it will only echo back the given IP. Example:
 
 ```
-❯  dotnet run --azureJson ../data/ServiceTags_Public_20220627.json --address 127.0.0.1 -q
+❯  dotnet run --azureJson ../data/ServiceTags_Public_20240408.json --address 127.0.0.1 -q
 127.0.0.1
 ```
 
